@@ -34,7 +34,7 @@ class tudoItemLista extends StatelessWidget {
           ),
           height: 60,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
                 DateFormat("dd/MM/yyyy - HH:mm")
