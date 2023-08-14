@@ -75,7 +75,10 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
                 shrinkWrap: true,
                 children: [
                   for (Data_Hora mensagen_controle in Mensagem) 
-                  tudoItemLista(mensagem_data_hora: mensagen_controle),
+                  tudoItemLista(
+                    mensagem_data_hora: mensagen_controle,
+                    item_deletar_tarefas: deletar_tarefas,
+                    ),
                   /*ListTile(
                       title: Text(mensagem),
                       subtitle: Text("5:00h"),
@@ -119,5 +122,11 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
         ),
       ),
     );
+    
   }
+  void deletar_tarefas(Data_Hora item_data_hora){
+      setState(() {
+        Mensagem.remove(item_data_hora);
+      }); 
+    }
 }

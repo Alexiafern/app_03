@@ -5,19 +5,22 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
 class tudoItemLista extends StatelessWidget {
-  const tudoItemLista({super.key, required this.mensagem_data_hora});
+  const tudoItemLista({super.key, required this.mensagem_data_hora, required this.item_deletar_tarefas,});
 
   final Data_Hora mensagem_data_hora;
+  final Function(Data_Hora) item_deletar_tarefas;
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      endActionPane: const ActionPane(
+      endActionPane:  ActionPane(
         motion: ScrollMotion(),
         children: [
           SlidableAction(
             flex: 2,
-            onPressed: null,
+            onPressed: (context) {
+              item_deletar_tarefas(mensagem_data_hora);
+            },
             backgroundColor: Colors.pink,
             foregroundColor: Colors.white,
             icon: Icons.delete,
