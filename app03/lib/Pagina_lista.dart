@@ -128,5 +128,7 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
       setState(() {
         Mensagem.remove(item_data_hora);
       }); 
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Tarefa ${item_data_hora.titulo} foi removida com sucesso",style: TextStyle(color: Colors.white),),
+      backgroundColor: Colors.pink,),);
     }
 }
