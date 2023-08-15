@@ -14,6 +14,8 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
   final TextEditingController mensagensControlador = TextEditingController();
 
   List<Data_Hora> Mensagem = [];
+  Data_Hora? deletar_itens;
+  int? posicao_atual_deletar;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +50,7 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
                     String qualquercoisa = mensagensControlador.text;
                     setState(() {
                       Data_Hora item_data_hora = Data_Hora(
-                        titulo: qualquercoisa, data_hora: DateTime.now());
+                          titulo: qualquercoisa, data_hora: DateTime.now());
                       Mensagem.add(item_data_hora);
                     });
                     mensagensControlador.clear();
@@ -74,10 +76,10 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  for (Data_Hora mensagen_controle in Mensagem) 
-                  tudoItemLista(
-                    mensagem_data_hora: mensagen_controle,
-                    item_deletar_tarefas: deletar_tarefas,
+                  for (Data_Hora mensagen_controle in Mensagem)
+                    tudoItemLista(
+                      mensagem_data_hora: mensagen_controle,
+                      item_deletar_tarefas: deletar_tarefas,
                     ),
                   /*ListTile(
                       title: Text(mensagem),
@@ -122,13 +124,33 @@ class _Pagina_ListaState extends State<Pagina_Lista> {
         ),
       ),
     );
-    
   }
-  void deletar_tarefas(Data_Hora item_data_hora){
-      setState(() {
-        Mensagem.remove(item_data_hora);
-      }); 
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Tarefa ${item_data_hora.titulo} foi removida com sucesso",style: TextStyle(color: Colors.white),),
-      backgroundColor: Colors.pink,),);
-    }
+
+  void deletar_tarefas(Data_Hora item_data_hora) {
+    deletar_itens = item_data_hora;
+    posicao_atual_deletar = Mensagem.indexOf(item_data_hora);
+
+    setState(() {
+      Mensagem.remove(item_data_hora);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Tarefa ${item_data_hora.titulo} foi removida com sucesso",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.pink,
+        action: SnackBarAction(
+          label: "Desfazer",
+          
+          onPressed: () {
+            setState(() {
+              Mensagem.insert(posicao_atual_deletar!, deletar_itens!);
+            });
+            
+          },
+        ),
+      ),
+    );
+  }
 }
